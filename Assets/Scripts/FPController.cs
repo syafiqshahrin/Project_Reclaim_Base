@@ -17,12 +17,13 @@ public class FPController : MonoBehaviour
     [SerializeField] Camera PlayerCamera;
     [SerializeField] float vertConstraint = 60.0f;
     [SerializeField] float PlayerSpeed = 2.0f;
+    [SerializeField] GameObject CapsuleObject;
     Vector2 inputVal = Vector2.zero;
 
     bool Pressed = false;
     private void Start()
     {
-        
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -42,19 +43,40 @@ public class FPController : MonoBehaviour
         currentHorRot.y = (currentHorRot.y + 180f) % 360f - 180f;
         currentHorRot.y += mouseDelta.x * horizontalTurnRate * mouseSensitivity;
         transform.rotation = Quaternion.Euler(currentHorRot);
-        
-
+        CapsuleObject.transform.rotation = Quaternion.Euler(currentHorRot);
     }
-    private void Update()
+    private void FixedUpdate()
     {
-        if(Pressed)
+        if (Pressed)
         {
             float zMovement;
             float xMovement;
             zMovement = inputVal.y * PlayerSpeed * Time.deltaTime;
             xMovement = inputVal.x * PlayerSpeed * Time.deltaTime;
+            int layerMask = 1 << 8;
+            layerMask = ~layerMask;
+            Vector3 prevPos = transform.position;
+            Vector3 startBot = prevPos;
+            Vector3 startTop = prevPos;
+            startBot.y = 0.0f;
+            Vector3 newPos = transform.InverseTransformPoint(startBot) + new Vector3(xMovement, 0.0f, zMovement);
+            Vector3 rayDirection = newPos - transform.InverseTransformPoint(startBot);
+            rayDirection = transform.TransformDirection(rayDirection);
 
-            transform.Translate(new Vector3(xMovement, 0.0f, zMovement), Space.Self);
+            Ray ray = new Ray(startBot, rayDirection); 
+            if(Physics.SphereCast(ray, 0.25f, 0.3f, layerMask, QueryTriggerInteraction.UseGlobal))
+            {
+                Debug.DrawRay(prevPos, rayDirection * 100.0f, Color.red);
+                //Debug.Log("Hit");
+            }
+            else
+            {
+                Debug.DrawRay(prevPos, rayDirection * 100.0f, Color.red);
+                transform.Translate(new Vector3(xMovement, 0.0f, zMovement), Space.Self);
+            }
+            Vector3 newTransform = new Vector3(transform.position.x, CapsuleObject.transform.position.y, transform.position.z);
+            CapsuleObject.transform.position = newTransform;
+            CapsuleObject.transform.rotation = transform.rotation;
         }
     }
     public void PlayerMove(InputAction.CallbackContext context)
@@ -62,13 +84,14 @@ public class FPController : MonoBehaviour
         inputVal = context.ReadValue<Vector2>();
         if (context.action.triggered)
         {
-            Debug.Log(context.valueType.Name);
+            //Debug.Log(context.valueType.Name);
         }
-        if(context.performed)
+        if (context.performed)
         {
             Pressed = true;
-            Debug.Log("x: " + inputVal.x + " y: " + inputVal.y);
-        }else
+           // Debug.Log("x: " + inputVal.x + " y: " + inputVal.y);
+        }
+        else
         {
             Pressed = false;
         }
