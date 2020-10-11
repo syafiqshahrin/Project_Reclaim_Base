@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9064600733933051126}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.506, z: -0.46}
+  m_LocalPosition: {x: 0, y: 1.5, z: -0.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 467530495071725734}
@@ -141,7 +141,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9064600734424009247}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.9, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9064600733933051125}
@@ -161,7 +161,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 1.8
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!1 &9064600734467157640
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,11 +210,16 @@ MonoBehaviour:
   verticalTurnRate: 0.025
   horizontalTurnRate: 0.03
   mouseSensitivity: 1
+  vertConstraint: 60
   input: {fileID: 1985195913}
   PlayerCamera: {fileID: 9064600733933051124}
-  vertConstraint: 60
-  PlayerSpeed: 5
+  PlayerSpeed: 4
+  Gravity: 9.8
+  maxStepHeight: 0.75
+  maxHeadAllowanceHeight: 1.6
   CapsuleObject: {fileID: 9064600734424009247}
+  CapsuleHeight: 1.8
+  CapsuleWidth: 1
 --- !u!114 &1985195913
 MonoBehaviour:
   m_ObjectHideFlags: 0
