@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 
 public class FPController : MonoBehaviour
 {
+    //Manages Character Movement States
     //Move Character with WASD
     //Turn Camera with mouse vertically
     //Turn Character with mouse horizontally
@@ -38,8 +39,10 @@ public class FPController : MonoBehaviour
     [SerializeField] float MaxDashDistance = 1.0f;
     [SerializeField] float DashTime = 0.75f;
     [SerializeField] float DashCooldown = 0.4f;
+    [SerializeField] float DashMaxCharges = 2.0f;
     float DashCooldownTimer;
     float DashTimer;
+    [SerializeField] float DashCurrentCharges;
     Vector3 DashDirection;
     [Header("Character Capsule Dimensions")]
     [SerializeField] GameObject CapsuleObject;
@@ -58,6 +61,7 @@ public class FPController : MonoBehaviour
         RunEaseInTime = 0.0f;
         DashCooldownTimer = 0.0f;
         DashTimer = 0.0f;
+        DashCurrentCharges = DashMaxCharges;
         CapsuleObject.GetComponent<CapsuleCollider>().height = CapsuleHeight;
         CapsuleObject.GetComponent<CapsuleCollider>().radius = CapsuleWidth/2.0f;
         CapsuleObject.GetComponent<CapsuleCollider>().center = new Vector3(0, CapsuleHeight/2.0f, 0);
@@ -232,7 +236,7 @@ public class FPController : MonoBehaviour
         if (CheckObstacle(direction))
         {
             Vector3 collisionNormal = hitInfoBody.normal;
-            Debug.Log("Normal: " + collisionNormal);
+            //Debug.Log("Normal: " + collisionNormal);
             if (collisionNormal.y != 0.0f)
             {
                 collisionNormal.y = 0.0f;
@@ -292,11 +296,20 @@ public class FPController : MonoBehaviour
     }
     private void UpdateDashCooldownTimer()
     {
-        if(DashCooldownTimer != 0.0f)
+        if (DashCurrentCharges < DashMaxCharges)
         {
-            DashCooldownTimer -= Time.deltaTime;
-            DashCooldownTimer = Mathf.Clamp(DashCooldownTimer, 0.0f, DashCooldown);
+            if (DashCooldownTimer != 0.0f)
+            {
+                DashCooldownTimer -= Time.deltaTime;
+                DashCooldownTimer = Mathf.Clamp(DashCooldownTimer, 0.0f, DashCooldown);
+            }
+            else
+            {
+                DashCurrentCharges = Mathf.Clamp(DashCurrentCharges + 1, 0.0f, DashMaxCharges);
+                DashCooldownTimer = DashCooldown;
+            }
         }
+        
         
     }
     private void UpdateDash()
@@ -318,11 +331,11 @@ public class FPController : MonoBehaviour
     }
     private void StartDash()
     {
-        if(!IsDashing && DashCooldownTimer == 0.0f)
+        if(!IsDashing && DashCurrentCharges > 0)
         {
             IsDashing = true;
             DashTimer = 0.0f;
-            DashCooldownTimer = DashCooldown;
+            DashCurrentCharges--;
             DashDirection = Vector2.zero;
             float dashSpeed = 0.0f;
             if (inputVal.magnitude > 0.0f)
@@ -336,7 +349,7 @@ public class FPController : MonoBehaviour
             else
             {
                 DashDirection = transform.InverseTransformDirection(transform.forward);
-                Debug.Log(DashDirection);
+                //Debug.Log(DashDirection);
                 dashSpeed = MaxDashDistance / DashTime;
                 DashDirection *= dashSpeed * Time.deltaTime;
                 
