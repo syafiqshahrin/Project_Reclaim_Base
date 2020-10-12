@@ -213,10 +213,64 @@ MonoBehaviour:
   vertConstraint: 60
   input: {fileID: 1985195913}
   PlayerCamera: {fileID: 9064600733933051124}
-  PlayerSpeed: 4
+  EaseInCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  EaseInRunCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  PlayerMaxSpeed: 4
+  PlayerRunMaxSpeed: 7.5
+  CurrentPlayerSpeed: 0
   Gravity: 9.8
   maxStepHeight: 0.75
   maxHeadAllowanceHeight: 1.6
+  SlopeAngle: 30
+  MaxDashDistance: 1.5
+  DashTime: 0.2
+  DashCooldown: 0.3
   CapsuleObject: {fileID: 9064600734424009247}
   CapsuleHeight: 1.8
   CapsuleWidth: 1
@@ -320,6 +374,36 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: dd8199dd-f4ea-43d8-a9fe-8a7eb37d46f7
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9064600734467157641}
+        m_MethodName: PlayerRun
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d3762767-2eb6-4d31-871e-75301ac8e373
+    m_ActionName: Player/Run[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9064600734467157641}
+        m_MethodName: DashStep
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7e77eae6-99e6-43ac-9459-8ed2abd9539d
+    m_ActionName: Player/DashStep[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
