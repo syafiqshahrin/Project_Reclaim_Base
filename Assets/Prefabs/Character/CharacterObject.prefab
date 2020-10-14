@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &288334841
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 288334842}
+  m_Layer: 8
+  m_Name: LeftWristSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &288334842
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288334841}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1520562967825115456}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 180}
 --- !u!1 &5268929635965565982
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,6 +234,9 @@ GameObject:
   - component: {fileID: 9064600734467157654}
   - component: {fileID: 9064600734467157641}
   - component: {fileID: 1985195913}
+  - component: {fileID: 5657905042451415991}
+  - component: {fileID: 2770560730330410164}
+  - component: {fileID: 7176664140186516095}
   m_Layer: 8
   m_Name: CharacterObject
   m_TagString: Untagged
@@ -302,6 +335,8 @@ MonoBehaviour:
   MaxDashDistance: 1.5
   DashTime: 0.2
   DashCooldown: 0.3
+  DashMaxCharges: 2
+  DashCurrentCharges: 0
   CapsuleObject: {fileID: 9064600734424009247}
   CapsuleHeight: 1.8
   CapsuleWidth: 1
@@ -361,10 +396,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 2443681c-2b1a-48e2-a470-d8f4f53e5ba2
     m_ActionName: Player/Look[/Mouse/delta]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e8019ddd-10bf-4745-a894-c680ec0bf369
-    m_ActionName: Player/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: a49b34b4-9efd-48ea-93c7-6399f9140c09
@@ -435,11 +466,120 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 7e77eae6-99e6-43ac-9459-8ed2abd9539d
     m_ActionName: Player/DashStep[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2770560730330410164}
+        m_MethodName: OnLeftClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f5a9f782-d784-4a92-8395-f0bf2ef85984
+    m_ActionName: Player/Gauntlet[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5657905042451415991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9064600734467157640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c03431940c4ba542bd6daacf0fb2289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2770560730330410164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9064600734467157640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35143e3b07e687148b99bc2e9213b170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerController: {fileID: 9064600734467157641}
+  ProjectileObject: {fileID: 3364793946576717475, guid: ba550a6a2a8152149b82614d375d35ed,
+    type: 3}
+  SpawnSocket: {fileID: 288334841}
+  AwayWeightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 0
+      inSlope: 0.069596484
+      outSlope: 0.069596484
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.101833224
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  TargetWeightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 2
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ProjectileSpeed: 10
+  MaxProjectileDuration: 3
+  TargetWeight: 100
+  AwayWeight: 10
+  MaxDistance: 20
+  ProjectileAmount: 10
+--- !u!114 &7176664140186516095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9064600734467157640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5ae8ef7faeb68499055477a9965ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &141786419878481741
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -460,7 +600,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: faa0c75410b4b534baad4db0d4d544ad,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.084
+      value: -0.186
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: faa0c75410b4b534baad4db0d4d544ad,
         type: 3}
@@ -470,7 +610,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: faa0c75410b4b534baad4db0d4d544ad,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.014
+      value: 0.289
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: faa0c75410b4b534baad4db0d4d544ad,
         type: 3}
@@ -531,6 +671,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -7715328025188850163, guid: faa0c75410b4b534baad4db0d4d544ad,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7715328025188850163, guid: faa0c75410b4b534baad4db0d4d544ad,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7715328025188850163, guid: faa0c75410b4b534baad4db0d4d544ad,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7679337304475220147, guid: faa0c75410b4b534baad4db0d4d544ad,
         type: 3}
@@ -1327,6 +1482,12 @@ PrefabInstance:
 --- !u!4 &467530495071725734 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: faa0c75410b4b534baad4db0d4d544ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 141786419878481741}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1520562967825115456 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -7715328025188850163, guid: faa0c75410b4b534baad4db0d4d544ad,
     type: 3}
   m_PrefabInstance: {fileID: 141786419878481741}
   m_PrefabAsset: {fileID: 0}

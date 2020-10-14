@@ -5,6 +5,13 @@ using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum PlayerStates
+{
+    Walking = 0,
+    Running,
+    Dashing
+}
+
 public class FPController : MonoBehaviour
 {
     //Manages Character Movement States
@@ -169,7 +176,7 @@ public class FPController : MonoBehaviour
 
         Ray rayGround = new Ray(centerPos, Vector3.down);
         Debug.DrawRay(centerPos, Vector3.down * (CapsuleHeight / 2.0f), Color.cyan);
-        if (Physics.Raycast(rayGround, out hitInfo, Mathf.Infinity, layerMask, QueryTriggerInteraction.UseGlobal))
+        if (Physics.SphereCast(rayGround, 0.25f, out hitInfo, Mathf.Infinity, layerMask, QueryTriggerInteraction.UseGlobal))
         {
             if (hitInfo.point.y > (transform.position.y))
             {
@@ -355,6 +362,11 @@ public class FPController : MonoBehaviour
                 
             }
         }
+    }
+
+    public Camera GetPlayerCamera()
+    {
+        return PlayerCamera;
     }
 }
 
